@@ -1,0 +1,88 @@
+.ps-widget {
+  font-family: 'Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif';
+  background-color: black;
+  padding: 15px;
+  height: 100%;
+  margin: 10px auto;
+  max-width: 400px;
+
+  @keyframes titleAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .balance {
+    margin: 5px 0px 0px 0px;
+    border: 1px solid white;
+    background: none;
+    color: white;
+    border-radius: 5px;
+
+    &.outOfBalance-true {
+      color: #fd043e;
+    }
+  }
+
+  .primary.button {
+    background-color: #393fe4;
+
+    &:hover, &:active, &:focus, &:visited {
+      background-color: #8f6bfd;
+    }
+  }
+
+  .positive.button {
+    background-color: #fd043e;
+
+    &:hover, &:active, &:focus, &:visited {
+      background-color: #e0899d;
+    }
+  }
+
+  .form .field {
+    > .selection.dropdown {
+      height: 51px;
+      line-height: normal;
+    }
+  }
+
+  .ui.selection.dropdown {
+    .menu > .item {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .text > img {
+      margin-right: 15px;
+    }
+  }
+
+  .button {
+    letter-spacing: 1px;
+  }
+
+  .form .field input, .button, .dropdown > .text {
+    font-size: 20px;
+  }
+
+  .form .field .ui.input input {
+    box-shadow: none;
+    border: none;
+    letter-spacing: 1px;
+  }
+
+  .image {
+    margin-bottom: 10px;
+  }
+
+  .message {
+    animation-name: titleAnimation;
+    animation-duration: 1s;
+  }
+
+}
