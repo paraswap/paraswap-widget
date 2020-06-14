@@ -29,6 +29,22 @@ import PSWidget from "paraswap-widget"
 <PSWidget referrer={"my_company"} providerUrl={"MY_INFURA_URL"} />
 ```
 
+Those are the properties you can use to customize the widget:
+
+```jsx
+interface IPSWidgetProps {
+  providerUrl: string;  //Required
+  referrer: string;  //Required
+  defaultSlippage: number;
+  defaultPair: { from: string, to: string, amount: string };
+  unlimitedAllowance: boolean;
+  hasReceiver: boolean;
+  bgColor: string;
+  fixedFrom: boolean,
+  fixedTo: boolean,
+}
+```
+
 You can also customize it a bit more
 
 ```jsx
@@ -38,6 +54,18 @@ You can also customize it a bit more
   unlimitedAllowance={false} 
   bgColor={"#DDD"} 
   defaultPair={{from: 'cDAI', to: 'aDAI', amount: '100'}} 
+/>
+```
+
+If you wan to fix the from and/or to token, you can use fixedFrom and fixedTo params
+
+```jsx
+<PSWidget 
+  referrer={"my_company"} 
+  providerUrl={"MY_INFURA_URL"}
+  defaultPair={{from: 'cDAI', to: 'JRT', amount: '100'}} 
+  fixedFrom={true}
+  fixedTo={true}
 />
 ```
 
