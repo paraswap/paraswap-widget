@@ -23,8 +23,9 @@ yarn install paraswap-widget
 ```
 
 ```jsx
-//or require
-import PSWidget from "paraswap-widget"
+const {PSWidget} = require("paraswap-widget");
+//or
+import {PSWidget} from "paraswap-widget";
 
 <PSWidget referrer={"my_company"} providerUrl={"MY_INFURA_URL"} />
 ```
