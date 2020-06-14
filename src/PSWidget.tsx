@@ -11,6 +11,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './PSWidget.scss';
 
 import {UNLIMITED_ALLOWANCE} from "paraswap";
+import {NULL_ADDRESS} from "paraswap/build/lib/transaction-builder";
 
 declare let window: any;
 declare let localStorage: any;
@@ -20,12 +21,15 @@ const DEFAULT_ALLOWED_SLIPPAGE = 0.01;//1%
 const DEFAULT_PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
 
 interface IPSWidgetProps {
-  providerUrl: string;
-  referrer: string;
+  providerUrl: string; //Required
+  referrer: string; //Required
   defaultSlippage: number;
   defaultPair: { from: string, to: string, amount: string };
   unlimitedAllowance: boolean;
+  hasReceiver: boolean;
   bgColor: string;
+  fixedFrom: boolean,
+  fixedTo: boolean,
 }
 
 interface IPSWidgetState {
@@ -39,7 +43,7 @@ interface IPSWidgetState {
   tokenFrom?: Token,
   tokenTo?: Token,
   user?: User,
-  priceRoute?: OptimalRates
+  priceRoute?: OptimalRates,
 }
 
 export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
@@ -51,7 +55,10 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
     defaultSlippage: DEFAULT_ALLOWED_SLIPPAGE,
     defaultPair: DEFAULT_PAIR,
     unlimitedAllowance: true,
-    bgColor: 'black'
+    bgColor: 'black',
+    hasReceiver: false,
+    fixedFrom: false,
+    fixedTo: false,
   };
 
   constructor(props: IPSWidgetProps) {
@@ -71,7 +78,7 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
       loading: true,
       tokens: [],
       srcAmount: this.props.defaultPair.amount,
-      receiver: '',
+      receiver: props.hasReceiver ? '' : NULL_ADDRESS,
       transactionHash: '',
     };
   }
@@ -460,14 +467,14 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
   render() {
     const {tokens, srcAmount, tokenFrom, tokenTo, loading, priceRoute, receiver, error, status, transactionHash} = this.state;
 
+    const {bgColor, hasReceiver, defaultPair, fixedFrom, fixedTo} = this.props;
+
     const options = tokens.map((t: any) => ({
       key: t.symbol,
       text: t.symbol,
       value: t.symbol,
       image: {avatar: true, src: t.img}
     }));
-
-    const {bgColor} = this.props;
 
     return (
       <div className={"ps-widget"} style={{backgroundColor: bgColor}}>
@@ -513,28 +520,40 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
           </Form.Field>
 
           <Form.Field>
-            <Dropdown
-              placeholder='From'
-              search
-              fluid
-              selection
-              options={options}
-              value={tokenFrom && tokenFrom.symbol}
-              onChange={(_, data: any) => this.updatePair('from', data.value)}
-            />
+            {
+              fixedFrom ? (
+                <Label className={"form-label"}>{defaultPair.from}</Label>
+              ) : (
+                <Dropdown
+                  placeholder='From'
+                  search
+                  fluid
+                  selection
+                  options={options}
+                  value={tokenFrom && tokenFrom.symbol}
+                  onChange={(_, data: any) => this.updatePair('from', data.value)}
+                />
+              )
+            }
             {this.getBalance('from')}
           </Form.Field>
 
           <Form.Field>
-            <Dropdown
-              placeholder='To'
-              search
-              fluid
-              selection
-              options={options}
-              value={tokenTo && tokenTo.symbol}
-              onChange={(_, data: any) => this.updatePair('to', data.value)}
-            />
+            {
+              fixedTo ? (
+                <Label className={"form-label"}>{defaultPair.to}</Label>
+              ) : (
+                <Dropdown
+                  placeholder='To'
+                  search
+                  fluid
+                  selection
+                  options={options}
+                  value={tokenTo && tokenTo.symbol}
+                  onChange={(_, data: any) => this.updatePair('to', data.value)}
+                />
+              )
+            }
             {this.getBalance('to')}
           </Form.Field>
 
@@ -546,14 +565,18 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
             />
           </Form.Field>
 
-          <Form.Field>
-            <Input
-              className={'pay-to'}
-              placeholder='Send to'
-              value={receiver}
-              onChange={e => this.onReceiverToChanged(e)}
-            />
-          </Form.Field>
+          {
+            hasReceiver ? (
+              <Form.Field>
+                <Input
+                  className={'pay-to'}
+                  placeholder='Send to'
+                  value={receiver}
+                  onChange={e => this.onReceiverToChanged(e)}
+                />
+              </Form.Field>
+            ) : null
+          }
 
           <Form.Field>
             <Button

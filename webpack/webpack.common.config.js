@@ -1,15 +1,13 @@
-const path = require('path'),
-  webpack = require('webpack'),
-  Dotenv = require('dotenv-webpack');
-
+const path = require('path');
+const webpack = require('webpack');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-
 
 module.exports = (env = process.env, dirname = __dirname) => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
   },
-  entry: path.resolve(dirname, '..', 'src/index.tsx'),
+  entry: path.resolve(dirname, '..', 'src/index.ts'),
   externals: [nodeExternals()],
   output: {
     filename: 'index.js',
@@ -55,12 +53,11 @@ module.exports = (env = process.env, dirname = __dirname) => ({
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
       'process.env.API_URL': JSON.stringify(env.API_URL),
       'process.env.PROVIDER_URL': JSON.stringify(env.PROVIDER_URL),
-    }),
-    new Dotenv()
+    })
   ]
 });
