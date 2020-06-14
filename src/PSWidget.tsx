@@ -8,7 +8,7 @@ const Web3 = require('web3');
 
 import 'semantic-ui-css/semantic.min.css';
 
-import './index.scss';
+import './PSWidget.scss';
 
 import {UNLIMITED_ALLOWANCE} from "paraswap";
 
@@ -42,7 +42,7 @@ interface IPSWidgetState {
   priceRoute?: OptimalRates
 }
 
-export class Index extends React.Component<IPSWidgetProps, IPSWidgetState> {
+export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
   paraswap: ParaSwap;
   provider: any;
   onAmountChangeEvt: any;
