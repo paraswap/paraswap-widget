@@ -6,3 +6,6 @@ tsconfig.json
 jest.config.js
 .idea
 .env
+webpack
+.babelrc
+.editorconfig
