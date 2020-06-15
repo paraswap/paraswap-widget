@@ -1,14 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 
 module.exports = (env = process.env, dirname = __dirname) => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
   },
   entry: path.resolve(dirname, '..', 'src/index.ts'),
-  externals: [nodeExternals()],
   output: {
     filename: 'index.js',
     path: path.resolve(dirname, '..', 'dist'),

@@ -1,6 +1,6 @@
 {
   "name": "paraswap-widget",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack -p --config ./webpack/webpack.production.config.js",
@@ -17,8 +17,7 @@
     "paraswap": "^2.0.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "0.87",
-    "web3": "^1.2.1",
-    "webpack-node-externals": "^1.7.2"
+    "web3": "^1.2.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.141",
