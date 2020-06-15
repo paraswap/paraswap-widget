@@ -482,10 +482,9 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
 
         {
           error ? (
-            <Message negative icon>
-              <Icon name='exclamation'/>
+            <Message negative>
               <Message.Content>
-                <Message.Content>{error}</Message.Content>
+                {error}
               </Message.Content>
             </Message>
           ) : null
