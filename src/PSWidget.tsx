@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import BN from "bignumber.js";
-import {Button, Dropdown, Form, Label, Icon, Input, Message, Image} from "semantic-ui-react";
+import {Button, Dropdown, Form, Label, Input, Message, Image} from "semantic-ui-react";
 import {Address, APIError, NetworkID, OptimalRates, ParaSwap, Token, User} from "paraswap";
 
 const Web3 = require('web3');
@@ -12,9 +12,6 @@ import './PSWidget.scss';
 
 import {UNLIMITED_ALLOWANCE} from "paraswap";
 import {NULL_ADDRESS} from "paraswap/build/lib/transaction-builder";
-
-declare let window: any;
-declare let localStorage: any;
 
 const DEFAULT_ALLOWED_SLIPPAGE = 0.01;//1%
 
@@ -241,11 +238,11 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
   };
 
   currentProvider() {
-    return (window.ethereum) || (window.web3 && window.web3.currentProvider);
+    return (typeof window !== "undefined") && ((window.hasOwnProperty("ethereum")) || (window.hasOwnProperty("web3") && window.web3.currentProvider));
   }
 
   saveUser(user: any) {
-    if (localStorage) {
+    if (typeof localStorage !== "undefined") {
       localStorage.setItem("user", user.address);
     }
   }
