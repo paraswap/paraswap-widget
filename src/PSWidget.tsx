@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import BN from "bignumber.js";
 import {Button, Dropdown, Form, Label, Input, Message, Image} from "semantic-ui-react";
-import {Address, APIError, NetworkID, OptimalRates, ParaSwap, Token, User} from "paraswap";
+import {Address, APIError, NetworkID, OptimalRatesWithPartnerFees, ParaSwap, Token, User} from "paraswap";
 
 const Web3 = require('web3');
 
@@ -40,7 +40,7 @@ interface IPSWidgetState {
   tokenFrom?: Token,
   tokenTo?: Token,
   user?: User,
-  priceRoute?: OptimalRates,
+  priceRoute?: OptimalRatesWithPartnerFees,
 }
 
 export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
@@ -197,7 +197,7 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
       return '';
     }
 
-    const destAmount = new BN(priceRoute.amount).dividedBy(10 ** tokenTo.decimals);
+    const destAmount = new BN(priceRoute.destAmount).dividedBy(10 ** tokenTo.decimals);
 
     if (destAmount.isNaN()) {
       return '';
@@ -289,9 +289,12 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
         try {
           const {tokenFrom, user, srcAmount} = this.state;
 
-          const allowance = await this.paraswap.getAllowance(user!.address, tokenFrom!.address);
+          const allowanceOrError = await this.paraswap.getAllowance(user!.address, tokenFrom!.address);
 
-          if (new BN(allowance).isGreaterThanOrEqualTo(new BN(srcAmount).times(10 ** tokenFrom!.decimals))) {
+          // check for APIError
+          if ('message' in allowanceOrError) throw allowanceOrError
+
+          if (new BN(allowanceOrError.allowance).isGreaterThanOrEqualTo(new BN(srcAmount).times(10 ** tokenFrom!.decimals))) {
             this.setState({status: 'Token approved...'});
             return resolve();
           }
@@ -394,7 +397,7 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
 
       const _srcAmount = new BN(srcAmount).times(10 ** tokenFrom!.decimals).toFixed(0);
 
-      const minDestinationAmount = new BN(priceRoute.amount).multipliedBy(1 - defaultSlippage).toFixed(0);
+      const minDestinationAmount = new BN(priceRoute.destAmount).multipliedBy(1 - defaultSlippage).toFixed(0);
 
       this.setState({status: 'Building the transaction...'});
 
