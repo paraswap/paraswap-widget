@@ -16,15 +16,30 @@ module.exports = merge(common(), {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
         ]
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true,
+          },
+        }]
       },
-    ]
+    ],
   },
   plugins: [new MiniCssExtractPlugin({
     filename: 'PSWidget.css', // extract styles
