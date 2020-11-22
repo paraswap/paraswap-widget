@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 module.exports = merge(common(), {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   performance: {
     hints: 'warning'
   },
