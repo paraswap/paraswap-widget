@@ -2,6 +2,7 @@
   "name": "paraswap-widget",
   "version": "1.0.10",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "NODE_ENV=production webpack -p --config ./webpack/webpack.production.config.js",
     "prepublishOnly": "npm run build"
