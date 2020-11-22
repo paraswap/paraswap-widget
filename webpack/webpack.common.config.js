@@ -20,20 +20,8 @@ module.exports = (env = process.env, dirname = __dirname) => ({
         loader: 'ts-loader'
       },
       {
-        test: /\.scss$/,
-        use: [
-          "style-loader", // creates style nodes from JS strings
-          "css-loader", // translates CSS into CommonJS
-          "sass-loader" // compiles Sass to CSS
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
         test: /\.(woff|woff2|ttf|eot)$/,
-        use: 'file-loader?name=fonts/[name].[ext]!static'
+        use: 'file-loader?name=fonts/[name].[ext]'
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
