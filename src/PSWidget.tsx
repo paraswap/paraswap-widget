@@ -478,7 +478,7 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
 
     return (
       <div className={"ps-widget"} style={{backgroundColor: bgColor}}>
-        <Image src="https://paraswap-images.s3-eu-west-1.amazonaws.com/logo.png"/>
+        <Image src="https://paraswap-achirecture.netlify.app/logo.png"/>
 
         {
           error ? (
