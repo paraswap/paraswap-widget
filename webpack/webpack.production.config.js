@@ -6,5 +6,7 @@ const common = require('./webpack.common.config.js');
 module.exports = merge(common(), {
   mode: 'production',
   devtool: 'source-map',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: [/\.s?css$/] // don't drop style dependencies
+  })],
 });
