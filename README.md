@@ -23,6 +23,9 @@ yarn install paraswap-widget
 ```
 
 ```jsx
+// include styles somewhere in your app
+import 'paraswap-widget/dist/PSWidget.css'
+
 const {PSWidget} = require("paraswap-widget");
 //or
 import {PSWidget} from "paraswap-widget";
