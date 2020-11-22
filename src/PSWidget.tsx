@@ -238,7 +238,9 @@ export class PSWidget extends React.Component<IPSWidgetProps, IPSWidgetState> {
   };
 
   currentProvider() {
-    return (typeof window !== "undefined") && ((window.hasOwnProperty("ethereum")) || (window.hasOwnProperty("web3") && window.web3.currentProvider));
+    return (typeof window !== "undefined") &&
+      (window.hasOwnProperty("ethereum") && window.ethereum) ||
+      (window.hasOwnProperty("web3") && window.web3.currentProvider);
   }
 
   saveUser(user: any) {
